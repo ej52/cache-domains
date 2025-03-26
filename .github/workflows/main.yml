@@ -4,7 +4,7 @@ on:
 jobs:
   generate:
     permissions: write-all
-    name: Pester test
+    name: generate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
