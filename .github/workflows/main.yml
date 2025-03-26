@@ -5,6 +5,8 @@ env:
   release_name: build_${{github.run_number}}
 jobs:
   generate:
+    permissions:
+      contents: write
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -20,25 +22,33 @@ jobs:
         run: |
           cd ./scripts
           ./create-adguardhome.sh
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{env.release_name}}
-          path: scripts/output/adguardhome/lancache.conf
-
-  release:
-    permissions:
-      contents: write
-    needs: generate
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{env.release_name}}
+      # - name: Upload Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ${{env.release_name}}
+      #     path: scripts/output/adguardhome/lancache.conf
       - name: 'Create Release'
         shell: bash
         run: |
           gh release create --generate-notes ${{ env.release_name }} scripts/output/adguardhome/lancache.conf
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # release:
+  #   permissions:
+  #     contents: write
+  #   needs: generate
+  #   runs-on: ubuntu-24.04
+  #   steps:
+  #     - name: Download Artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: ${{env.release_name}}
+  #     - name: 'Create Release'
+  #       shell: bash
+  #       run: |
+  #         for f in redumper-*.zip; do FILES+=" $f"; done
+  #         gh release create --generate-notes ${{ env.release_name }} $FILES
+  #         gh release create --generate-notes ${{ env.release_name }} scripts/output/adguardhome/lancache.conf
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
