@@ -24,7 +24,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{env.release_name}}
-          path: output
+          path: scripts/output
 
   release:
     permissions:
@@ -39,6 +39,6 @@ jobs:
       - name: 'Create Release'
         shell: bash
         run: |
-          gh release create --generate-notes ${{ env.release_name }} output/adguardhome/lancache.conf
+          gh release create --generate-notes ${{ env.release_name }} scripts/output/adguardhome/lancache.conf
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
