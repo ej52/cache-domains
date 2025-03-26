@@ -24,7 +24,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{env.release_name}}
-          path: scripts/output
+          path: scripts/output/adguardhome/lancache.conf
 
   release:
     permissions:
