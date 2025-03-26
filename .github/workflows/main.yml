@@ -2,7 +2,8 @@ name: Generate Configs
 on:
   workflow_dispatch:
 jobs:
-  pester-test:
+  generate:
+    permissions: write-all
     name: Pester test
     runs-on: ubuntu-latest
     steps:
